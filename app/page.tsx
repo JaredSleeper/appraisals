@@ -38,7 +38,10 @@ export default async function Home({
     );
   }
 
-  const data = items as Item[];
+  // Ranked by estimated value, highest first (ties broken by the low end).
+  const data = [...(items as Item[])].sort(
+    (a, b) => b.price_high - a.price_high || b.price_low - a.price_low,
+  );
   const totalLo = data.reduce((s, i) => s + (i.price_low || 0), 0);
   const totalHi = data.reduce((s, i) => s + (i.price_high || 0), 0);
 
